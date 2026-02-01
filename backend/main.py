@@ -10,9 +10,14 @@ app = FastAPI()
 
 # Enable CORS for Next.js
 from fastapi.middleware.cors import CORSMiddleware
+
+# Get allowed origins from env or default to localhost
+msg_origins = os.getenv("ALLOWED_ORIGINS", "http://localhost:3000")
+origins = [origin.strip() for origin in msg_origins.split(",")]
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000"], 
+    allow_origins=origins + ["https://edunet-capstone-project.vercel.app", "http://localhost:3000"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
